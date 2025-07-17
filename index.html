@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BYS - Brazilian Youth Society</title>
+    <style>
+        :root {
+            --pastel-blue: #A7C7E7;
+            --pastel-green: #C1E1C1;
+            --pastel-yellow: #FDFD96;
+            --white: #FFFFFF;
+            --black: #333333;
+            --light-gray: #F5F5F5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--pastel-blue), var(--pastel-green));
+            color: var(--white);
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background-color: var(--white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li {
+            margin: 0 1rem;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            background-color: var(--pastel-blue);
+            color: var(--white);
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            min-height: 60vh;
+        }
+        
+        .section-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section-content.active {
+            display: block;
+        }
+        
+        section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            border-radius: 10px;
+            background-color: var(--white);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        h1, h2, h3 {
+            color: var(--black);
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, var(--pastel-blue), var(--pastel-green));
+        }
+        
+        .what-is {
+            background-color: var(--pastel-blue);
+            color: var(--black);
+        }
+        
+        .team {
+            background-color: var(--pastel-green);
+            color: var(--black);
+        }
+        
+        .application {
+            background-color: var(--pastel-yellow);
+            color: var(--black);
+        }
+        
+        .join-team {
+            background: linear-gradient(135deg, var(--pastel-green), var(--pastel-blue));
+            color: var(--black);
+        }
+        
+        .vestibular {
+            background: linear-gradient(135deg, var(--pastel-blue), var(--pastel-yellow));
+            color: var(--black);
+        }
+        
+        .resources {
+            background: linear-gradient(135deg, var(--pastel-green), var(--pastel-yellow));
+            color: var(--black);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .team-member {
+            background-color: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .team-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 3px solid var(--pastel-blue);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--pastel-blue);
+            color: var(--black);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-yellow {
+            background-color: var(--pastel-yellow);
+        }
+        
+        .btn-green {
+            background-color: var(--pastel-green);
+        }
+        
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .form-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .form-tab.active {
+            border-bottom: 3px solid var(--pastel-blue);
+            font-weight: 600;
+        }
+        
+        .form-tab:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .form-content {
+            display: none;
+        }
+        
+        .form-content.active {
+            display: block;
+        }
+        
+        .resource-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .resource-card {
+            background-color: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            background-color: var(--black);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .social-links {
+            margin: 1rem 0;
+        }
+        
+        .social-links a {
+            color: var(--white);
+            margin: 0 10px;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--pastel-blue);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .main-container {
+                padding: 0 1rem;
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">BYS</div>
+        <div class="tagline">Brazilian Youth Society</div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#" class="nav-link active" data-section="about">O que é a BYS</a></li>
+            <li><a href="#" class="nav-link" data-section="team">Conheça o Time</a></li>
+            <li><a href="#" class="nav-link" data-section="join">Faça Parte</a></li>
+            <li><a href="#" class="nav-link" data-section="application">Application EUA</a></li>
+            <li><a href="#" class="nav-link" data-section="vestibular">Vestibular</a></li>
+        </ul>
+    </nav>
+    
+    <div class="main-container">
+        <!-- Sobre a BYS -->
+        <div id="about" class="section-content active">
+            <section class="what-is">
+                <h2>O que é a Brazilian Youth Society</h2>
+                <p>A Brazilian Youth Society (BYS) é uma organização dedicada ao empoderamento e desenvolvimento da juventude brasileira. Nosso objetivo é criar oportunidades, fornecer recursos e construir uma comunidade onde jovens talentosos possam crescer, aprender e se conectar.</p>
+                <p>Fundada em 2025, a BYS tem como missão impactar jovens em todo o Brasil através da educação, eventos de networking e iniciativas de desenvolvimento.</p>
+                <a href="#" class="btn nav-link" data-section="join">Junte-se a Nós</a>
+            </section>
+        </div>
+        
+        <!-- Conheça o Time -->
+        <div id="team" class="section-content">
+            <section class="team">
+                <h2>Conheça o Time</h2>
+                <p>Nossa equipe é composta por profissionais dedicados e jovens líderes apaixonados por fazer a diferença na vida da juventude brasileira.</p>
+                
+                <div class="team-grid">
+                    <div class="team-member">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Mariana Júnior">
+                        <h3>Mariana Júnior</h3>
+                        <p>Co-founder</p>
+                        <p>Co-fundadora da BYS.</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Priscila Carvalho">
+                        <h3>Priscila Carvalho</h3>
+                        <p>Co-founder</p>
+                        <p>Co-fundadora da BYS.</p>
+                    </div>
+                    
+                </div>
+            </section>
+        </div>
+        
+        <!-- Faça Parte -->
+        <div id="join" class="section-content">
+            <section class="join-team">
+                <h2>Faça Parte do Time</h2>
+                <p>Quer se juntar à nossa equipe de voluntários ou colaboradores? Preencha o formulário abaixo e nos conte sobre você!</p>
+                
+                <form id="joinForm">
+                    <div class="form-group">
+                        <label for="join-name">Nome Completo</label>
+                        <input type="text" id="join-name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="join-email">E-mail</label>
+                        <input type="email" id="join-email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="join-phone">Telefone</label>
+                        <input type="tel" id="join-phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="join-city">Cidade/Estado</label>
+                        <input type="text" id="join-city" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="join-role">Como gostaria de contribuir?</label>
+                        <select id="join-role" required>
+                            <option value="">Selecione...</option>
+                            <option value="volunteer">Voluntário</option>
+                            <option value="mentor">Mentor</option>
+                            <option value="speaker">Palestrante</option>
+                            <option value="partner">Parceiro Institucional</option>
+                            <option value="other">Outro</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="join-experience">Conte-nos sobre sua experiência e habilidades relevantes</label>
+                        <textarea id="join-experience" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="join-availability">Disponibilidade (horas por semana)</label>
+                        <input type="number" id="join-availability" min="1" max="40" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-green">Enviar Candidatura</button>
+                </form>
+            </section>
+        </div>
+        
+        <!-- Application EUA -->
+        <div id="application" class="section-content">
+            <section class="application">
+                <h2>Application EUA</h2>
+                <p>Já pensou em estudar nos EUA? É um sonho para muitos, mas pode parecer um desafio! A BYS está aqui para te ajudar a tornar esse sonho realidade!
+                </p>
+                
+                <h3>O que ofereçemos</h3>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>Dicas valiosas e práticas para ajudá-lo a se preparar para o application
+                    </li>
+                    <li>Tudo que você precisa para estudar fora</li>
+                    <li>Comunidade para se conectar com estudantes</li>
+                </ul>
+                
+                <h3>O que está esperando?</h3>
+                <p>Venha fazer parte da nossa comunidade e descubra como podemos ajudá-lo a estudar nos EUA!
+                </p>
+            </section>
+        </div>
+        
+        <!-- Vestibular -->
+        <div id="vestibular" class="section-content">
+            <section class="vestibular">
+                <h2>Vestibular</h2>
+                <p>Já pensou no vestibular? Isso te assusta? Pois não se preocupe! A BYS está aqui para te ajudar a conquistar uma vaga na universidade dos seus sonhos!</p>
+                
+                <h3>O que ofereçemos</h3>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>Dicas valiosas e práticas para ajudá-lo a se preparar com confiança e alcançar seus objetivos
+                    </li>
+                    <li>Aprenda como estudar de forma eficaz</li>
+                    <li>Comunidade para se conectar com estudantes</li>
+                </ul>
+                
+                <h3>O que está esperando?</h3>
+                <p>Venha fazer parte da nossa comunidade e descubra como podemos ajudá-lo a alcançar o sucesso no vestibular!
+                </p>
+                
+            </section>
+        </div>
+        
+    </div>
+    
+    <footer>
+        <div class="logo">BYS</div>
+        <p>Brazilian Youth Society</p>
+        
+        <div class="social-links">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            
+        </div>
+        
+        <p>&copy; 2025 Brazilian Youth Society. Todos os direitos reservados.</p>
+        <p>brazilianyouthsociety@gmail.com</p>
+    </footer>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <script>
+  document.getElementById('joinForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = {
+      nome: document.getElementById('join-name').value,
+      email: document.getElementById('join-email').value,
+      telefone: document.getElementById('join-phone').value,
+      cidade: document.getElementById('join-city').value,
+      funcao: document.getElementById('join-role').value,
+      experiencia: document.getElementById('join-experience').value,
+      disponibilidade: document.getElementById('join-availability').value
+    };
+
+    fetch('SUA_URL_DO_APPS_SCRIPT', {
+      method: 'POST',
+      body: JSON.stringify(formData)
+    })
+    .then(response => {
+      alert("Inscrição enviada com sucesso!");
+      this.reset();
+    })
+    .catch(error => {
+      alert("Ocorreu um erro. Por favor, tente novamente mais tarde.");
+    });
+  });
+        // Navegação entre seções
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mostrar a seção inicial
+            showSection('about');
+            
+            // Configurar listeners para os links de navegação
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('data-section');
+                    
+                    // Atualizar navegação ativa
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Mostrar seção correspondente
+                    showSection(sectionId);
+                });
+            });
+        });
+        
+        function showSection(sectionId) {
+            // Esconder todas as seções
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Mostrar a seção selecionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Rolagem suave para o topo
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Função para as abas do formulário de Application EUA
+        function openFormTab(evt, tabName) {
+            // Esconder todos os conteúdos de formulário
+            const formContents = document.querySelectorAll('#application .form-content');
+            formContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remover classe active de todas as abas
+            const formTabs = document.querySelectorAll('#application .form-tab');
+            formTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostrar aba atual e marcar como ativa
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
